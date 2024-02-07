@@ -58,19 +58,13 @@
                 </template>
                 Libros            
             </nav-link>
-
-            <nav-link :href="route('copias.index')" :active="route().current('copias.index')">
-                <template #icon>
-                    <i class="fa-solid fa-swatchbook"></i>
-                </template>
-                Copias            
-            </nav-link>
-            <nav-link :href="route('localidades.index')" :active="route().current('localidades.index')">
+           <!--  <nav-link :href="route('localidades.index')" :active="route().current('localidades.index')">
                 <template #icon>
                     <i class="fa-solid fa-swatchbook"></i>
                 </template>
                 Localidades            
-            </nav-link>
+            </nav-link> -->
+           
 
             
 

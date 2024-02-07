@@ -31,16 +31,16 @@ const form = useForm({
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-                <form @submit.prevent="$event => form.patch(route('categoria.update', categorias))">
+                <form @submit.prevent="$event => form.put(route('categorias.update', categorias))">
             <div>
                 <InputLabel for="name" value="Nombre de la Categoria" />
-                <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
+                <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus />
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
             <div>
                 <InputLabel for="description" value="Descripcion" />
-                <TextInput id="description" type="text" class="mt-1 block w-full" v-model="form.description" required autofocus autocomplete="description" />
+                <TextInput id="description" type="text" class="mt-1 block w-full" v-model="form.description" required autofocus/>
                 <InputError class="mt-2" :message="form.errors.description" />
             </div>
 

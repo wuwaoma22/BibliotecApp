@@ -5,7 +5,7 @@ import DangerButton from '@/Components/DangerButton.vue';
 import Swal from 'Sweetalert2';
 
 const props = defineProps({
-    categorias: { type: Object }
+    copias: { type: Object }
 });
 
 const form = useForm({
@@ -68,14 +68,14 @@ const deleteCategoria = (id, name) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="cat, i in categorias" :key="cat.id">
+                        <tr v-for="cat, i in copias" :key="cat.id">
                             <td class="border border-gray-400 px-4 py-4">{{ i + 1 }}</td>
                             <td class="border border-gray-400 px-4 py-4">{{ cat.libro_id }}</td>
                             <td class="border border-gray-400 px-4 py-4">{{ cat.localidad_id }}</td>
                             <td class="border border-gray-400 px-4 py-4">{{ cat.tipo_id }}</td>
                             <td class="border border-gray-400 px-4 py-4">{{ cat.disponibilidad_id }}</td>
                             <td class="border border-gray-400 px-4 py-4">
-                                <Link :href="route('categorias.edit', cat)"
+                                <Link :href="route('copias.edit', cat)"
                                     :class="'px-4 py-2 bg-yellow-400 text-white border rounded-md font-semibold text-xs'">
                                 <i class="fa-solid fa-edit"></i>
                                 </Link>

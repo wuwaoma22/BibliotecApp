@@ -8,7 +8,7 @@
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-                cards
+                <ListBooks></ListBooks>
             </div>
         </div>
     </AuthenticatedLayout>
@@ -17,4 +17,5 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3';
+import ListBooks from '@/Components/ListBooks.vue';
 </script>

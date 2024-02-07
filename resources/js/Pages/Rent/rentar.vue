@@ -19,15 +19,22 @@ const props = defineProps({
     categorias: { type: Object }
 });
 
+
+axios.post('/api/libros/rentar', { libro_id: libroId })
+    .then(response => {
+        console.log(response.data.message); // Muestra el mensaje de éxito en la consola
+        // Realiza cualquier otra acción necesaria después de rentar el libro
+    })
+    .catch(error => {
+        console.error(error); // Muestra cualquier error en la consola
+        // Maneja cualquier error que ocurra durante la solicitud
+    });
+
 </script>
 
 <template>
-    <Head title="Crear Libro" />
 
     <AuthenticatedLayout>
-        <template #header>
-            Crear Libro
-        </template>
 
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -74,4 +81,6 @@ const props = defineProps({
             </div>
         </div>
     </AuthenticatedLayout></template>
+
+
 

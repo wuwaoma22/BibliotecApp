@@ -30,6 +30,7 @@ class CopiaController extends Controller
         $localidades = localidades::all();
         $tipos = tipo::all();
         $disponibilidad = disponibilidad::all();
+        //dd($libros);
         return Inertia::render('Copias/Create', ['libros'=> $libros,'localidades'=> $localidades,'tipos'=> $tipos,'disponibilidad'=> $disponibilidad, ]);
     }
 
@@ -38,6 +39,7 @@ class CopiaController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
         $request->validate(['libro_id' => 'required']);
         $request->validate(['localidad_id' => 'required']);
         $request->validate(['tipo_id' => 'required']);

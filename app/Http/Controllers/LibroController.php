@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
 use Inertia\Inertia;
 use App\Models\libros;
+use App\Models\Renta;
 use Illuminate\Http\Request;
 
 class LibroController extends Controller
@@ -17,12 +19,35 @@ class LibroController extends Controller
         return Inertia::render('Libros/Index', ['libros'=> $libros]);
     }
 
+    public function allBooks()
+    {
+        $request = libros::all();
+        // Aplicar filtros si existen
+        $query = libros::query();
+        if ($request->has('categoria_id')) {
+            $query->where('categoria_id', $request->categoria_id);
+        }
+
+        // Ordenar por fecha de lanzamiento y alfabéticamente
+        $query->orderBy('publication_year')->orderBy('title');
+
+        // Paginación para optimización de respuesta
+        $libros = $query->paginate(10);
+
+        dd($libros);
+
+        return response()->json($libros);
+        
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return Inertia::render('Libros/Create');
+        $categorias = category::all();
+        return Inertia::render('Libros/Create', ['categorias'=> $categorias]);
     }
 
     /**
@@ -30,9 +55,10 @@ class LibroController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['title' => 'required|max100']);
-        $request->validate(['author' => 'required|max100']);
-        $request->validate(['publication_year' => 'required|max100']);
+        //dd($request);
+        $request->validate(['title' => 'required|max:100']);
+        $request->validate(['author' => 'required|max:100']);
+        $request->validate(['publication_year' => 'required|max:100']);
         $request->validate(['category_id' => 'required']);
         $libros = new libros($request->input());
         $libros->save();
@@ -50,19 +76,24 @@ class LibroController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(libros $libros)
+    public function edit(String $id)
     {
-        return Inertia::render('Libros/Edit', ['libros' => $libros]);
+        $libros = libros::find($id);
+        //dd($libros);
+        $categorias = category::all();
+        return Inertia::render('Libros/Edit', ['libros' => $libros, 'categorias' =>$categorias]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, libros $libros)
+    public function update(Request $request, String $id)
     {
-        $request->validate(['title' => 'required|max100']);
-        $request->validate(['author' => 'required|max100']);
-        $request->validate(['publication_year' => 'required|max100']);
+        $libros = libros::find($id);
+        //dd($request);
+        $request->validate(['title' => 'required|max:100']);
+        $request->validate(['author' => 'required|max:100']);
+        $request->validate(['publication_year' => 'required|max:100']);
         $request->validate(['category_id' => 'required']);
         $libros->update();
         return redirect('libros');
@@ -74,5 +105,21 @@ class LibroController extends Controller
     public function destroy(libros $libros)
     {
         $libros->delete();
+    }
+
+    public function rentar(Request $request)
+    {
+        
+       // Valida los datos del request según sea necesario
+
+        // Encuentra el libro por su ID
+        $libro = Renta::findOrFail($request->input('libro_id'));
+
+        // Implementa la lógica de renta del libro aquí, por ejemplo:
+        $libro->estado = true;
+        $libro->save();
+
+        // Puedes devolver una respuesta JSON con un mensaje de éxito
+        return response()->json(['message' => 'Libro rentado con éxito'], 200);
     }
 }

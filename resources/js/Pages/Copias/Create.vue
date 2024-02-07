@@ -20,11 +20,13 @@ const form = useForm({
 });
 
 const props = defineProps({
-    tipos: {type: Object},
-    libros: {type: Object},
-    localidades: {type: Object},
-    disponibilidad: {type: Object}
+    tipos: { type: Object },
+    libros: { type: Object },
+    localidades: { type: Object },
+    disponibilidad: { type: Object }
 });
+
+console.log(props.libros)
 
 </script>
 
@@ -40,23 +42,72 @@ const props = defineProps({
             <div class="p-6 border-b border-gray-200">
                 <form @submit.prevent="$event => form.post(route('copias.store'))">
 
-                    <div>
-                       
+
+                    <select v-model="form.libro_id" class="block mt-1 w-full rounded-md form-input focus:border-indigo-600" :value="modelValue"
+                        @change="$event => $emit('update:modelValue', $event.target.value)" ref="input">
+                        <option value=""> Seleccionar Libro</option>
+                        <option v-for="op in libros" :key="op.i" :value="op.id">
+                            {{ op.title }}
+                        </option>
+                    </select>
+
+                    <select v-model="form.tipo_id" class="block mt-1 w-full rounded-md form-input focus:border-indigo-600" :value="modelValue"
+                        @change="$event => $emit('update:modelValue', $event.target.value)" ref="input">
+                        <option value=""> Seleccionar Tipo de Libro</option>
+                        <option v-for="op in tipos" :key="op.i" :value="op.id">
+                            {{ op.name }}
+                        </option>
+                    </select>
+                    <select v-model="form.localidad_id" class="block mt-1 w-full rounded-md form-input focus:border-indigo-600" :value="modelValue"
+                        @change="$event => $emit('update:modelValue', $event.target.value)" ref="input">
+                        <option value=""> Seleccionar Localidad</option>
+                        <option v-for="op in localidades" :key="op.i" :value="op.id">
+                            
+                            {{ op.name }}
+                        </option>
+                    </select>
+                    <select v-model="form.disponibilidad_id" class="block mt-1 w-full rounded-md form-input focus:border-indigo-600" :value="modelValue"
+                        @change="$event => $emit('update:modelValue', $event.target.value)" ref="input">
+                        <option value=""> Seleccionar disponibilidad</option>
+                        <option v-for="op in disponibilidad" :key="op.i" :value="op.id">
+                            {{ op.name }}
+                        </option>
+                    </select>
+
+                    <!--  <div>
+                        <InputLabel>disponibilidad</InputLabel>
+                        <select name="disponibilidad_id" class="mt-1 block w-3/4">
+                            <option v-for="(item, key) in disponibilidad" :value="item.id">
+                                {{ item.name }}
+                            </option>
+                        </select>
                     </div>
 
                     <div>
-                        <InputLabel for="name" value="Name" />
-                        <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus
-                            autocomplete="name" />
-                        <InputError class="mt-2" :message="form.errors.name" />
+                        <InputLabel>disponibilidad</InputLabel>
+                        <select name="disponibilidad_id" class="mt-1 block w-3/4">
+                            <option v-for="(item, key) in disponibilidad" :value="item.id">
+                                {{ item.name }}
+                            </option>
+                        </select>
                     </div>
 
                     <div>
-                        <InputLabel for="description" value="Description" />
-                        <TextInput id="description" type="text" class="mt-1 block w-full" v-model="form.description"
-                            required autofocus autocomplete="description" />
-                        <InputError class="mt-2" :message="form.errors.description" />
+                        <InputLabel>tipos</InputLabel>
+                        <select for="tipo_id" name="tipo_id" class="mt-1 block w-3/4">
+                            <option v-for="(item, key) in tipos" :value="item.id">
+                                {{ item.name }}
+                            </option>
+                        </select>
                     </div>
+                    <div>
+                        <InputLabel>Localidad</InputLabel>
+                        <select name="localidad_id" class="mt-1 block w-3/4">
+                            <option v-for="(item, key) in localidades" :value="item.id">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div> -->
 
                     <PrimaryButton :disabled="form.processing">
                         <i class="fa-solid fa-save"></i>Guardar
